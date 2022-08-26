@@ -1,0 +1,154 @@
+.rs-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.rs-modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.rs-modal-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.rs-modal-left {
+    width: 25%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.rs-modal-left-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-items: flex-start;
+}
+
+.rs-modal-top {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rs-text {
+    font-size: 17px;
+    padding: 6px 14px;
+    color: aliceblue;
+}
+
+.fs-btn {
+    background-color: #70C274;
+    width: 13px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    height: 13px;
+}
+
+.cl-btn {
+    margin-left: 4px;
+    background-color: red;
+    width: 13px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    height: 13px;
+}
+
+.gach {
+    margin: auto;
+    width: 77%;
+    height: 2px;
+    background-color: #fff;
+}
+
+.rs-modal-right {
+    width: 100%;
+    background-size: cover;
+}
+
+.rs-modal-banner {
+    width: 100%;
+    padding: 0 70px;
+}
+
+.rs-modal-banner img {
+    width: 100%;
+    height: auto;
+}
+
+.rs-cart-item {
+    padding: 10px 14px;
+    margin: 4px 0px;
+    width: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rs-cart-item:hover {
+    background-color: red;
+}
+
+.rs-cart-item-icon {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.rs-border {
+    font-size: 24px;
+}
+
+.rs-modal-right-header {
+    width: 100%;
+    padding: 4px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rs-user-zone{
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 12px;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(1, 1, 1, 0.2);
+}
+
+.hehehe {
+    font-size: 24px;
+}
+
+.rs-user-zone span {
+    margin-left: 4px;
+    font-size: 15px;
+}
+
+.rs-user-zone-icon {
+    font-size: 17px;
+}
+
+.rs-modal-right-content {
+    height: 75vh;
+    overflow-y: scroll;
+}
+
+.rs-modal-right-content {
+    padding: 40px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+  }

@@ -1,0 +1,10 @@
+.payment-options {
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+}
+
+.method-heading {
+    display: flex;
+    align-items: center;
+}
