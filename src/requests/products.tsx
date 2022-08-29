@@ -9,6 +9,16 @@ export const GET_PRODUCT_CATEGORY = gql`
   }
 `
 
+export const GET_ALL_PRODUCT = gql`
+  query GET_PRODUCT_BY_CATEGORY_ID($category_id: Int!) {
+    product {
+      price
+      id
+      thumbnail
+      name
+  }
+}
+`
 export const GET_PRODUCT_BY_CATEGORY_ID = gql`
   query GET_PRODUCT_BY_CATEGORY_ID($category_id: Int!) {
     product(where: { category_id: { _eq: $category_id } }) {

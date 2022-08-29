@@ -21,6 +21,11 @@ export default function Product({data}:iProduct) {
     const order = useQuery(GET_ORDER, { variables: { store_id: restaurant, table_id: table } });
     let orderTarget = order?.data?.order[0]?.id
     
+    /** Khi nhấn vào Add to cart, những thứ sẽ xảy ra:
+     * @step1 Show modal cho phép người dùng điền ghi chú cho món
+     * @step2 Nâng giá trị order count nên 1
+     * @step3 Thêm món ăn vào danh sách order
+     */
 
     const handleAdd = () => {
 
