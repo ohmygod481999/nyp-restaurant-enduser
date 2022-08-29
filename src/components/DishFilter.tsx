@@ -17,7 +17,7 @@ export default function DishFilter() {
 
     const { loading, error, data } = useQuery(GET_PRODUCT_CATEGORY);
 
-    console.log(data)
+    console.log(20, data)
 
     return <div>
         <Swiper

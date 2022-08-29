@@ -12,6 +12,7 @@ export default function Products() {
     price: number
     thumbnail: string
     name: string
+    id: number
   }
 
   const params = useParams()
@@ -22,7 +23,7 @@ export default function Products() {
     <div className="most_popular p-3">
       <div className="row">
 
-        { data?.product?.map((item:iProduct, index:number) => <Product data={item}/>) }
+        { data?.product?.map((item:iProduct, index:number) => <Product key={index} data={item}/>) }
 
       </div>
     </div>

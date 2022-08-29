@@ -1,28 +1,50 @@
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import DishFilter from "../components/DishFilter"
 import Footer from "../components/Footer"
+import { targetZone, targetStore } from "../store"
 import Trending from "../components/Trending"
-import { GET_PRODUCT } from "./../requests/products"
-import { useQuery, gql } from '@apollo/client';
+import { GET_PRODUCT, CREATE_ORDER, GET_ORDER, ORDER_ITEMS_SUBSCRIPTION } from "./../requests/products"
+import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import Header from "../components/Header"
+import { useRecoilState } from "recoil"
 
-export default function Home(){
+export default function Home() {
 
-    let { restaurant, branch } = useParams()
-    const { loading, error, data } = useQuery(GET_PRODUCT);
+  let { restaurant, branch, table } = useParams()
+  const { loading, error, data } = useQuery(GET_PRODUCT)
+  const [_targetStore_, setTargetStore] = useRecoilState<any>(targetStore)
+  const [_targetZone_, setZone] = useRecoilState<any>(targetZone)
+  const [createOrder, createOrderResponse] = useMutation(CREATE_ORDER)
 
-    console.log(data)
 
-    console.log(restaurant)
-    return <div>
+  useEffect(() => {
+    setTargetStore(restaurant)
+    setZone(branch)
+
+    // khởi tạo hóa đơn khi khách vào bàn
+    const handleCreateStore = () => {
+      createOrder({
+        variables: {
+          store_id: restaurant,
+          table_id: table
+        }, onError: () => {
+          console.log(`Error: Existed Order`)
+        }
+      })
+    }; handleCreateStore()
+  }, [])
+
+  return <div>
     <div className="osahan-home-page">
       <Header />
       {/* Filters */}
       <div className="bg-light">
         <br />
-      <DishFilter />
-      <br />
+        <DishFilter/>
+        <br />
         {/* Trending this week */}
+
         <div className="px-3 pt-3 title d-flex align-items-center">
           <h5 className="m-0">Trending this week</h5>
           <a className="font-weight-bold ml-auto" href="trending.html">View all <i className="feather-chevrons-right" /></a>
@@ -50,7 +72,7 @@ export default function Home(){
                 <div className="p-3 position-relative">
                   <div className="list-card-body">
                     <h6 className="mb-1"><a href="restaurant.html" className="text-black">The osahan Restaurant
-                      </a>
+                    </a>
                     </h6>
                     <p className="text-gray mb-1 small">• North • Hamburgers</p>
                     <p className="text-gray mb-1 rating">
@@ -118,7 +140,7 @@ export default function Home(){
                 <div className="p-3 position-relative">
                   <div className="list-card-body">
                     <h6 className="mb-1"><a href="restaurant.html" className="text-black">The osahan Restaurant
-                      </a>
+                    </a>
                     </h6>
                     <p className="text-gray mb-1 small">• Hamburgers • Pure veg</p>
                     <p className="text-gray mb-1 rating">
@@ -194,7 +216,7 @@ export default function Home(){
                 <div className="p-3 position-relative">
                   <div className="list-card-body">
                     <h6 className="mb-1"><a href="restaurant.html" className="text-black">The osahan Restaurant
-                      </a>
+                    </a>
                     </h6>
                     <p className="text-gray mb-3">North • Hamburgers • Pure veg</p>
                     <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="feather-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $500 FOR TWO</span></p>
@@ -240,7 +262,7 @@ export default function Home(){
                 <div className="p-3 position-relative">
                   <div className="list-card-body">
                     <h6 className="mb-1"><a href="restaurant.html" className="text-black">The osahan Restaurant
-                      </a>
+                    </a>
                     </h6>
                     <p className="text-gray mb-3">North • Hamburgers • Pure veg</p>
                     <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="feather-clock" /> 15–25 min</span> <span className="float-right text-black-50"> $500 FOR TWO</span></p>
@@ -256,7 +278,7 @@ export default function Home(){
       </div>
 
       {/* Footer */}
-    <Footer />
+      <Footer />
     </div>
     <nav id="main-nav">
       <ul className="second-nav">
@@ -438,10 +460,10 @@ export default function Home(){
             </div>
           </div>
           <div className="modal-footer p-0 border-0">
-            <div className="col-6 m-0 p-0">                 
+            <div className="col-6 m-0 p-0">
               <button type="button" className="btn border-top btn-lg btn-block" data-dismiss="modal">Close</button>
             </div>
-            <div className="col-6 m-0 p-0">     
+            <div className="col-6 m-0 p-0">
               <button type="button" className="btn btn-primary btn-lg btn-block">Apply</button>
             </div>
           </div>

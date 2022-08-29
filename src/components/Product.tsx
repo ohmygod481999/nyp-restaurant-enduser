@@ -1,24 +1,39 @@
 import { useState } from "react"
-import { useRecoilState } from "recoil"
-import { cart } from "../store"
+import { useParams } from "react-router-dom"
 import { AiOutlineShoppingCart } from "react-icons/ai"
+import { useMutation, useQuery } from '@apollo/client'
+import { ADD_ORDER_ITEM, GET_ORDER } from "../requests/products"
 
 interface iProduct {
     data:{
         price: number
         thumbnail: string
         name: string
+        id: number
     }
   }
 /// Single Product
 export default function Product({data}:iProduct) {
 
-    const [_cart_, setCart] = useRecoilState<any>(cart)
+    let { restaurant, branch, table } = useParams()
 
-    const addToCart = (item:any) => {
-        setCart((prev:any) => [...prev, item])
-        console.log(_cart_)
+    const [addOrderItem, addOrderItemResponse] = useMutation(ADD_ORDER_ITEM)
+    const order = useQuery(GET_ORDER, { variables: { store_id: restaurant, table_id: table } });
+    let orderTarget = order?.data?.order[0]?.id
+    
+
+    const handleAdd = () => {
+
+        addOrderItem({
+            variables: {
+                quantity: 1, note: "None", order_id: orderTarget, product_id: data.id
+            }, onError: () => {
+              console.log(`Error: Existed Order`)
+            }
+          })
     }
+
+    // Khi thêm vào giỏ hàng đồng nghĩa với việc tạo 1 order list
 
     const iconStyle:any = {
         fontSize:26, 
@@ -29,11 +44,12 @@ export default function Product({data}:iProduct) {
         cursor: "pointer"
     }
 
+
     return <div className="col-6 pl-2">
         <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm grid-card">
             <div className="list-card-image">
                 <div className="star position-absolute"><span className="badge badge-success"><i className="feather-star" /> 3.1 (300+)</span></div>
-                <div className="favourite-heart text-danger position-absolute"><AiOutlineShoppingCart onClick={()=>addToCart(data)} style={iconStyle}/></div>
+                <button className="favourite-heart text-danger position-absolute"><AiOutlineShoppingCart onClick={handleAdd} style={iconStyle}/></button>
                 <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
                 <a>
                     <img style={{maxHeight:"400px"}} src={data.thumbnail} className="img-fluid item-img w-100" />

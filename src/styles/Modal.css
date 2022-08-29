@@ -1,11 +1,17 @@
-.rs-overlay {
+.cart {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
+    overflow-y: scroll;
     height: 100vh;
     z-index: 999;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+.store-image {
+    width: 44px;
+    height: 44px;
 }
 
 .rs-modal {

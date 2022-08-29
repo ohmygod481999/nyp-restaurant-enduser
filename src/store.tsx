@@ -4,3 +4,13 @@ export let cart = atom({
     key: "cart",
     default: []
 })
+
+export let targetStore = atom({
+    key: "store",
+    default: NaN
+})
+
+export let targetZone = atom({
+    key: "zone",
+    default: NaN
+})

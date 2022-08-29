@@ -9,8 +9,8 @@ function App() {
   return <RecoilRoot>
     <BrowserRouter>
       <Routes>
-        <Route path="/:restaurant/:branch/products/category=:cid" element={<Products />} />
-        <Route path="/:restaurant/:branch" element={<Home />} />
+        <Route path="/:restaurant/:branch/:table/products/category=:cid" element={<Products />} />
+        <Route path="/:restaurant/:branch/:table" element={<Home />} />
         <Route path="/" element={<Landing />} />
       </Routes>
 
