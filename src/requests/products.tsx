@@ -16,6 +16,7 @@ export const GET_ALL_PRODUCT = gql`
       id
       thumbnail
       name
+      order_count
   }
 }
 `
@@ -26,6 +27,7 @@ export const GET_PRODUCT_BY_CATEGORY_ID = gql`
       id
       thumbnail
       name
+      order_count
     }
   }
 `
@@ -36,6 +38,7 @@ export const GET_PRODUCT = gql`
       name
       price
       thumbnail
+      order_count
     }
   }
 `;
@@ -50,6 +53,14 @@ export const CREATE_ORDER = gql`
 export const GET_ORDER = gql`
   query GET_ORDER ($store_id: Int!, $table_id: Int!) {
     order(where: { store_id: { _eq: $store_id }, table_id: { _eq: $table_id } }) {
+      id
+    }
+  }
+`
+
+export const INCREASE_ORDER_COUNT = gql`
+  mutation A($product_id: Int!) {
+    update_product_by_pk(pk_columns: {id: $product_id}, _inc: {order_count: 1}) {
       id
     }
   }

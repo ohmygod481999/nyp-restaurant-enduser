@@ -21,6 +21,22 @@ export default function DishFilter() {
 
     return <div>
         <Swiper
+            breakpoints={
+                {
+                    '320': {
+                    slidesPerView: 3,
+                    spaceBetween:10 }, 
+
+                    '720':{
+                    slidesPerView: 5,
+                    spaceBetween:10 },
+                    
+                    '980':{
+                    slidesPerView: 7,
+                    spaceBetween:10 }
+
+                }
+            }
             slidesPerView={6}
             spaceBetween={10}
             pagination={{

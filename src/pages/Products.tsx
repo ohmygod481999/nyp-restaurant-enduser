@@ -13,6 +13,7 @@ export default function Products() {
     thumbnail: string
     name: string
     id: number
+    order_count: number
   }
 
   const params = useParams()

@@ -2,25 +2,28 @@ import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { AiOutlineShoppingCart } from "react-icons/ai"
 import { useMutation, useQuery } from '@apollo/client'
-import { ADD_ORDER_ITEM, GET_ORDER } from "../requests/products"
-
+import "./../styles/NoteModal.css"
+import { ADD_ORDER_ITEM, GET_ORDER, INCREASE_ORDER_COUNT } from "../requests/products"
 interface iProduct {
-    data:{
+    data: {
         price: number
         thumbnail: string
         name: string
         id: number
+        order_count: number
     }
-  }
+}
 /// Single Product
-export default function Product({data}:iProduct) {
+export default function Product({ data }: iProduct) {
 
     let { restaurant, branch, table } = useParams()
-
+    const [noteModal, setNoteModal] = useState<boolean>(false)
+    const [noteValue, setNoteValue] = useState<string>("")
     const [addOrderItem, addOrderItemResponse] = useMutation(ADD_ORDER_ITEM)
+    const [increaseOderCount, increaseOderCountResponse] = useMutation(INCREASE_ORDER_COUNT)
     const order = useQuery(GET_ORDER, { variables: { store_id: restaurant, table_id: table } });
     let orderTarget = order?.data?.order[0]?.id
-    
+
     /** Khi nhấn vào Add to cart, những thứ sẽ xảy ra:
      * @step1 Show modal cho phép người dùng điền ghi chú cho món
      * @step2 Nâng giá trị order count nên 1
@@ -29,19 +32,33 @@ export default function Product({data}:iProduct) {
 
     const handleAdd = () => {
 
-        addOrderItem({
+        setNoteModal(true)
+
+    }
+
+    const submitOrder = () => {
+
+        increaseOderCount({
             variables: {
-                quantity: 1, note: "None", order_id: orderTarget, product_id: data.id
-            }, onError: () => {
-              console.log(`Error: Existed Order`)
+                product_id: data.id
             }
-          })
+        })
+
+        addOrderItem({
+        variables: {
+            quantity: 1, note: noteValue, order_id: orderTarget, product_id: data.id
+        }, onError: () => {
+          console.log(`Error: Existed Order`)
+        }
+        })
+
+        setNoteModal(false)
     }
 
     // Khi thêm vào giỏ hàng đồng nghĩa với việc tạo 1 order list
 
-    const iconStyle:any = {
-        fontSize:26, 
+    const iconStyle: any = {
+        fontSize: 26,
         borderRadius: "50%",
         textAlign: "center",
         backgroundColor: "white",
@@ -51,13 +68,33 @@ export default function Product({data}:iProduct) {
 
 
     return <div className="col-6 pl-2">
+
+{ noteModal && <div className="noteModal_overlay">
+            
+            <div className="noteModal">
+                <div className="noteModal_header">
+                    <h5>
+                        Thêm ghi chú
+                        <h6 className="noteModal_foodName">{data.name}</h6>
+                    </h5>
+
+                    <button onClick={()=>setNoteModal(false)}></button>
+                </div>
+
+                <textarea className="noteModal_textzone" onChange={(e:any) => setNoteValue(e.target.value)} rows={8}></textarea>
+
+                <button onClick={submitOrder} className="noteModal_order_btn">Hoàn tất</button>
+            </div>
+            
+        </div>}
+
         <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm grid-card">
             <div className="list-card-image">
                 <div className="star position-absolute"><span className="badge badge-success"><i className="feather-star" /> 3.1 (300+)</span></div>
-                <button className="favourite-heart text-danger position-absolute"><AiOutlineShoppingCart onClick={handleAdd} style={iconStyle}/></button>
+                <button className="favourite-heart text-danger position-absolute"><AiOutlineShoppingCart onClick={handleAdd} style={iconStyle} /></button>
                 <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
                 <a>
-                    <img style={{maxHeight:"400px"}} src={data.thumbnail} className="img-fluid item-img w-100" />
+                    <img style={{ maxHeight: "400px" }} src={data.thumbnail} className="img-fluid item-img w-100" />
                 </a>
             </div>
             <div className="p-3 position-relative">
