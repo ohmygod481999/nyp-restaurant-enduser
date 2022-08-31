@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Cart from "./Cart"
 import "./../styles/Footer.css"
 
 export default function Footer(){
+
+  const { restaurant, branch, table } = useParams()
 
     const [showCart, setShowCart] = useState<boolean>(false)
     const toggleModal = () => {
@@ -21,7 +23,7 @@ export default function Footer(){
         </Link>
       </div>
       <div className="col">
-        <Link to="" className="text-dark small font-weight-bold text-decoration-none">
+        <Link to={`/${restaurant}/${branch}/${table}/trending`} className="text-dark small font-weight-bold text-decoration-none">
           <p className="h4 m-0"><i className="feather-map-pin" /></p>
           Trending
         </Link>

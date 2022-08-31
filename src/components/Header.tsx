@@ -13,7 +13,7 @@ export default function Header() {
                 <a className="toggle" href="#">
                     <span />
                 </a>
-                <h4 onClick={() => nav(`/`)} className="smart-restaurant-logo font-weight-bold m-0 pl-5"><span><IoFastFoodOutline /></span>SMART RESTAURANT</h4>
+                <h4 onClick={() => nav(`/${restaurant}/${branch}/${table}`)} className="smart-restaurant-logo font-weight-bold m-0 pl-5"><span><IoFastFoodOutline /></span>SMART RESTAURANT</h4>
                 <a className="text-white font-weight-bold ml-auto" data-toggle="modal" data-target="#exampleModal" href="#">Filter</a>
             </div>
         </div>
