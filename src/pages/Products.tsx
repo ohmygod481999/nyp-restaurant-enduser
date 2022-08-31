@@ -18,6 +18,9 @@ export default function Products() {
 
   const params = useParams()
   const { data } = useQuery(GET_PRODUCT_BY_CATEGORY_ID, { variables: { category_id: params.cid }}) 
+  const [dialog, showDialog] = useState<boolean>(true)
+
+  setTimeout(()=> showDialog(false), 3000)
 
   return <div>
     <Header />

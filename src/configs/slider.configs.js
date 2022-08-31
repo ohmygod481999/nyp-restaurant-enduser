@@ -1,28 +1,14 @@
-export var settings = {
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: false
-            }
-        },
-        {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2
-            }
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }
-    ]
+export var responsive = {
+    '320': {
+    slidesPerView: 3,
+    spaceBetween:10 }, 
+
+    '720':{
+    slidesPerView: 5,
+    spaceBetween:10 },
+    
+    '980':{
+    slidesPerView: 7,
+    spaceBetween:10 }
+
 }

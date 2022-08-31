@@ -14,3 +14,8 @@ export let targetZone = atom({
     key: "zone",
     default: NaN
 })
+
+export let targetTable = atom({
+    key: "table",
+    default: NaN
+})

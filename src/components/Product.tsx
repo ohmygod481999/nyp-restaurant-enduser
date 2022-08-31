@@ -4,6 +4,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai"
 import { useMutation, useQuery } from '@apollo/client'
 import "./../styles/NoteModal.css"
 import { ADD_ORDER_ITEM, GET_ORDER, INCREASE_ORDER_COUNT } from "../requests/products"
+import Dialog from "../components/Dialog"
+
 interface iProduct {
     data: {
         price: number
@@ -19,6 +21,7 @@ export default function Product({ data }: iProduct) {
     let { restaurant, branch, table } = useParams()
     const [noteModal, setNoteModal] = useState<boolean>(false)
     const [noteValue, setNoteValue] = useState<string>("")
+    const [dialog, showDialog] = useState<boolean>(false)
     const [addOrderItem, addOrderItemResponse] = useMutation(ADD_ORDER_ITEM)
     const [increaseOderCount, increaseOderCountResponse] = useMutation(INCREASE_ORDER_COUNT)
     const order = useQuery(GET_ORDER, { variables: { store_id: restaurant, table_id: table } });
@@ -36,6 +39,11 @@ export default function Product({ data }: iProduct) {
 
     }
 
+    const showingDialog = () => {
+        showDialog(true)
+        setTimeout(()=> showDialog(false), 1000)
+    }
+
     const submitOrder = () => {
 
         increaseOderCount({
@@ -51,8 +59,9 @@ export default function Product({ data }: iProduct) {
           console.log(`Error: Existed Order`)
         }
         })
-
+        
         setNoteModal(false)
+        showingDialog()
     }
 
     // Khi thêm vào giỏ hàng đồng nghĩa với việc tạo 1 order list
@@ -69,7 +78,8 @@ export default function Product({ data }: iProduct) {
 
     return <div className="col-6 pl-2">
 
-{ noteModal && <div className="noteModal_overlay">
+        { dialog && <Dialog data={data.name}/> }
+        { noteModal && <div className="noteModal_overlay">
             
             <div className="noteModal">
                 <div className="noteModal_header">

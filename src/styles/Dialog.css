@@ -1,0 +1,18 @@
+.dialog-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.dialog {
+    position: absolute;
+    right: 0;
+    padding: 20px;
+    width: 150px;
+    background-color: rgb(173, 173, 173);
+    bottom: 15%;
+    color: black;
+}

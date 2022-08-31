@@ -4,12 +4,14 @@ import { RecoilRoot } from 'recoil';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing, Home } from "./pages"
 import Products from './pages/Products';
+import Search from './pages/Search';
 
 function App() {
   return <RecoilRoot>
     <BrowserRouter>
       <Routes>
         <Route path="/:restaurant/:branch/:table/products/category=:cid" element={<Products />} />
+        <Route path="/:restaurant/:branch/:table/q=:keyword" element={<Search />} />
         <Route path="/:restaurant/:branch/:table" element={<Home />} />
         <Route path="/" element={<Landing />} />
       </Routes>

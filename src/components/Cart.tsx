@@ -89,8 +89,6 @@ Cart.Item = function CartItem({ data }:any) {
         id: data.product_id
     } })
 
-    console.log(productDetail?.data?.product_by_pk.name)
-
     return <div className="bg-white rounded shadow mb-3 py-2">
         <div className="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
             <div className="media align-items-center">
