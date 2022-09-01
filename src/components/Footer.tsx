@@ -17,7 +17,7 @@ export default function Footer(){
     { showCart && <Cart setShowCart={setShowCart}/> }
     <div className="row">
       <div className="col selected">
-        <Link to="/" className="text-danger small font-weight-bold text-decoration-none">
+        <Link to={`/${restaurant}/${branch}/${table}`} className="text-danger small font-weight-bold text-decoration-none">
           <p className="h4 m-0"><i className="feather-home text-danger" /></p>
           Home
         </Link>
