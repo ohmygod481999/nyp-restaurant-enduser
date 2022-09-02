@@ -102,7 +102,7 @@ export default function Product({ data }: iProduct) {
             <div className="list-card-image">
                 <div className="star position-absolute"><span className="badge badge-success"><i className="feather-star" /> 3.1 (300+)</span></div>
                 <button className="favourite-heart text-danger position-absolute"><AiOutlineShoppingCart onClick={handleAdd} style={iconStyle} /></button>
-                <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
+                <div className="member-plan position-absolute"><span className="badge badge-dark">{data.price} VND</span></div>
                 <a>
                     <img style={{ maxHeight: "400px" }} src={data.thumbnail} className="img-fluid item-img w-100" />
                 </a>

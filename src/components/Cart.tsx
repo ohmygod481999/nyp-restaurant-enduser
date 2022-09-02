@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import { GET_ORDER, ORDER_ITEMS_SUBSCRIPTION, REMOVE_ORDER_ITEMS, PRODUCT_DETAIL } from "./../requests/products"
 import "./../styles/Modal.css"
+import { ON_PAY_REQUEST } from "../requests/payment";
 
 interface Props {
     setShowCart: (value: boolean) => void
@@ -22,8 +23,7 @@ export default function Cart({ setShowCart }: Props) {
 
     let { restaurant, branch, table } = useParams()
     let nav = useNavigate()
-    const [fullScreen, setFullScreen] = useState<boolean>(false)
-    const [_cart_, setCart] = useRecoilState<any>(cart)
+    const [waiting, setWaiting] = useState<boolean>(false)
 
     const order = useQuery(GET_ORDER, { variables: { store_id: restaurant, table_id: table } });
     const[removeOrderItems, removeOrderItemsResponse] = useMutation(REMOVE_ORDER_ITEMS)
@@ -35,18 +35,41 @@ export default function Cart({ setShowCart }: Props) {
         }
     })
 
+    let [onPayRequest, _onPayRequest_] = useMutation(ON_PAY_REQUEST)
+
     const paymentRequest = () => {
-        // 
-        removeOrderItems({
-            variables: {
-                order_id: orderTarget
-            }, onCompleted(data) {
-                nav(`/`)
-            },
-        })
+
+        setWaiting(true)
+
+        onPayRequest({ variables:{order_id: orderTarget}, onCompleted(data) { console.log(data) } })
+
+        /** @onPay Complete below **/
+
+        // removeOrderItems({
+        //     variables: {
+        //         order_id: orderTarget
+        //     }, onCompleted(data) {
+        //     }
+        // })
+    }
+
+    const waitingModalStyles:any = {
+        width:'100vw', 
+        height:'100vh', 
+        position:'fixed', 
+        backgroundColor:`rgba(0, 0, 0, 0.5)`, 
+        zIndex:999
     }
 
     return <div className="cart osahan-checkout">
+
+        {waiting && <div style={waitingModalStyles}>
+            <img src="/img/loading.svg" alt="" /> 
+            <div>
+                <h4 className="text-white">Xin vui lòng đợi nhân viên xác nhận thanh toán</h4>    
+            </div>  
+        </div>}
+
         <div className="bg-primary border-bottom px-3 pt-3 pb-5 d-flex align-items-center">
             <a className="toggle" href="#"><span /></a>
             <h4 className="font-weight-bold m-0 text-white pl-5">Order</h4>
