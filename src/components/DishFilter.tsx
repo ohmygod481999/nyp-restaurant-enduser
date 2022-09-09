@@ -8,6 +8,9 @@ import * as configs from "../configs/slider.configs";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./../styles/DishFilter.css";
+// import * as configs from "./../configs/Slider.configs"
+
+import { responsive } from "../configs/slider.configs";
 
 interface Item {
   name: string;
