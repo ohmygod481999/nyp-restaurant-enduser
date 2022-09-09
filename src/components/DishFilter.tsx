@@ -3,11 +3,12 @@ import { Link } from "react-router-dom"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from '@apollo/client';
 import { GET_PRODUCT_CATEGORY } from "./../requests/products"
-import * as configs from "./../configs/Slider.configs.js"
+// import * as configs from "./../configs/Slider.configs"
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "./../styles/DishFilter.css"
+import { responsive } from "../configs/slider.configs";
 
 interface Item {
     name: string
@@ -20,7 +21,7 @@ export default function DishFilter() {
 
     return <div>
         <Swiper
-            breakpoints={configs.responsive}
+            breakpoints={responsive}
             slidesPerView={6}
             spaceBetween={10}
             pagination={{
