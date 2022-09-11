@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoFastFoodOutline } from "react-icons/io5";
 export default function Header() {
   const nav = useNavigate();
-  const { restaurant, branch, table } = useParams();
+  const { company_id, branch_id, table_id } = useParams();
   const [searchValue, setSearchValue] = useState<string>("");
 
   return (
@@ -14,7 +14,7 @@ export default function Header() {
             <span />
           </a>
           <h4
-            onClick={() => nav(`/${restaurant}/${branch}/${table}`)}
+            onClick={() => nav(`/${company_id}/${branch_id}/${table_id}`)}
             className="smart-restaurant-logo font-weight-bold m-0"
           >
             <span>
@@ -22,21 +22,21 @@ export default function Header() {
             </span>
             SMART RESTAURANT
           </h4>
-          <a
+          {/* <a
             className="text-white font-weight-bold ml-auto"
             data-toggle="modal"
             data-target="#exampleModal"
             href="#"
           >
             Filter
-          </a>
+          </a> */}
         </div>
       </div>
       <form className="input-group mt-3 rounded shadow-sm overflow-hidden">
         <div className="input-group-prepend">
           <button
             onClick={() =>
-              nav(`/${restaurant}/${branch}/${table}/q=${searchValue}`)
+              nav(`/${company_id}/${branch_id}/${table_id}/q=${searchValue}`)
             }
             className="border-0 btn btn-outline-secondary text-dark bg-white btn-block"
           >
@@ -47,7 +47,7 @@ export default function Header() {
           onChange={(e: any) => setSearchValue(e.target.value)}
           type="text"
           className="shadow-none border-0 form-control"
-          placeholder="Search for restaurants or dishes"
+          placeholder="Tìm kiếm món"
         />
       </form>
     </div>

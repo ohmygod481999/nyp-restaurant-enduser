@@ -1,8 +1,14 @@
 import { atom } from "recoil"
+import { Order } from "./types"
 
 export let cart = atom({
     key: "cart",
     default: []
+})
+
+export let _orderState = atom<Order | null>({
+    key: "order",
+    default: null
 })
 
 export let targetStore = atom({

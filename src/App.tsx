@@ -1,22 +1,39 @@
-import React from 'react';
-import "./App.css"
-import { RecoilRoot } from 'recoil';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Home, Products, Search, Trending } from "./pages"
+import React, { useEffect } from "react";
+import "./App.css";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Landing, Home, Products, Search, Trending } from "./pages";
+import InitOrderTable from "./components/InitOrderTable";
 
 function App() {
-  return <RecoilRoot>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/:restaurant/:branch/:table/products/category=:cid" element={<Products />} />
-        <Route path="/:restaurant/:branch/:table/q=:keyword" element={<Search />} />
-        <Route path="/:restaurant/:branch/:table/trending" element={<Trending />} />
-        <Route path="/:restaurant/:branch/:table" element={<Home />} />
-        <Route path="/" element={<Landing />} />
-      </Routes>
+    useEffect(() => {
+        return () => {};
+    }, []);
 
-    </BrowserRouter>
-  </RecoilRoot>
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<InitOrderTable />}>
+                    <Route
+                        path="/:company_id/:branch_id/:table_id/products/category=:cid"
+                        element={<Products />}
+                    />
+                    <Route
+                        path="/:company_id/:branch_id/:table_id/q=:keyword"
+                        element={<Search />}
+                    />
+                    <Route
+                        path="/:company_id/:branch_id/:table_id/trending"
+                        element={<Trending />}
+                    />
+                    <Route
+                        path="/:company_id/:branch_id/:table_id/home"
+                        element={<Home />}
+                    />
+                </Route>
+                    {/* <Route path="/" element={<Landing />} /> */}
+            </Routes>
+        </BrowserRouter>
+    );
 }
 export default App;

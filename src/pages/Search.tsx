@@ -10,8 +10,13 @@ interface iProduct {
     price: number
     thumbnail: string
     name: string
+    description: string
     id: number
     order_count: number
+    product_category: {
+        id: number;
+        name: string;
+    }
   }
 
 export default function Search() {

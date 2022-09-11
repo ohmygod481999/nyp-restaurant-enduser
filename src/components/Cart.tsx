@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cart } from "../store";
+import { cart, _orderState } from "../store";
 import { useRecoilState } from "recoil";
 
 import { useParams, useNavigate } from "react-router-dom";
@@ -12,6 +12,8 @@ import {
 } from "./../requests/products";
 import "./../styles/Modal.css";
 import { ON_PAY_REQUEST } from "../requests/payment";
+import { Order } from "../types";
+import { formatMoney } from "../utils";
 
 interface Props {
     setShowCart: (value: boolean) => void;
@@ -29,18 +31,18 @@ export default function Cart({ setShowCart }: Props) {
     const [fullScreen, setFullScreen] = useState<boolean>(false);
     const [_cart_, setCart] = useRecoilState<any>(cart);
 
-    const order = useQuery(GET_ORDER, {
-        variables: { store_id: restaurant, table_id: table },
-    });
     const [removeOrderItems, removeOrderItemsResponse] =
         useMutation(REMOVE_ORDER_ITEMS);
-    let orderTarget = order?.data?.order[0]?.id;
+
+    const [orderState, setOrderState] = useRecoilState<Order | null>(
+        _orderState
+    );
 
     const [waiting, setWaiting] = useState<boolean>(false);
 
     let { data, error, loading } = useSubscription(ORDER_ITEMS_SUBSCRIPTION, {
         variables: {
-            order_id: orderTarget,
+            order_id: orderState?.id,
         },
     });
 
@@ -50,7 +52,7 @@ export default function Cart({ setShowCart }: Props) {
         setWaiting(true);
 
         onPayRequest({
-            variables: { order_id: orderTarget },
+            variables: { order_id: orderState?.id },
             onCompleted(data) {
                 console.log(data);
             },
@@ -75,9 +77,9 @@ export default function Cart({ setShowCart }: Props) {
     };
 
     const buttonStyle = {
-      border: "none",
-      background: "transparent",
-      fontsize: 10,
+        border: "none",
+        background: "transparent",
+        fontsize: 10,
     };
 
     return (
@@ -94,12 +96,12 @@ export default function Cart({ setShowCart }: Props) {
                     </div>
                 )}
 
-                <div className="bg-primary border-bottom px-3 pt-3 pb-5 d-flex align-items-center">
+                <div className="bg-primary border-bottom px-3 pt-3 pb-3 d-flex align-items-center">
                     <a className="toggle" href="#">
                         <span />
                     </a>
-                    <h4 className="font-weight-bold m-0 text-white pl-5">
-                        Order
+                    <h4 className="font-weight-bold m-0 text-white">
+                        Giỏ hàng
                     </h4>
                     <button
                         onClick={() => setShowCart(false)}
@@ -107,16 +109,19 @@ export default function Cart({ setShowCart }: Props) {
                         style={buttonStyle}
                     >
                         {" "}
-                        Close
+                        Đóng
                     </button>
                 </div>
                 {/**/}
                 {loading && <h2>Loading ...</h2>}
+                {data && data.order_items.length === 0 && (
+                    <div className="mt-3">Giỏ hàng trống</div>
+                )}
                 {data &&
                     data.order_items?.map((item: any, index: number) => (
                         <Cart.Item key={index} data={item} />
                     ))}
-                <div className="mb-3 shadow bg-white rounded p-3 py-3 mt-3 clearfix">
+                {/* <div className="mb-3 shadow bg-white rounded p-3 py-3 mt-3 clearfix">
                     <div className="input-group-sm mb-2 input-group">
                         <input
                             placeholder="Enter promo code"
@@ -146,7 +151,7 @@ export default function Cart({ setShowCart }: Props) {
                             defaultValue={""}
                         />
                     </div>
-                </div>
+                </div> */}
 
                 <button
                     onClick={paymentRequest}
@@ -188,7 +193,10 @@ Cart.Item = function CartItem({ data }: any) {
                         />
                     </span>
                     <p className="text-gray mb-0 float-right ml-2 text-muted small">
-                        VND {productDetail?.data?.product_by_pk.price}
+                        {productDetail?.data?.product_by_pk.price &&
+                            formatMoney(
+                                productDetail?.data?.product_by_pk.price
+                            )}
                     </p>
                 </div>
             </div>

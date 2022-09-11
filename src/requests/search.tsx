@@ -5,6 +5,13 @@ export const SEARCH_PRODUCT = gql`
         product(where: {name: {_ilike: $keyword }}) {
             id
             name
+            thumbnail
+            price
+            description
+            product_category {
+                id
+                name
+            }
           }
     }
 `

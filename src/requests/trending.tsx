@@ -8,8 +8,13 @@ export const GET_TOP_TRENDING = gql`
             price
             id
             thumbnail
+            description
             name
             order_count
+            product_category {
+                id
+                name
+            }
         }
     }
 `
