@@ -5,14 +5,14 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const wsLink = new WebSocketLink({
-    uri: `wss://longvb.ddns.net:8083/v1/graphql`,
+    uri: process.env.REACT_APP_HASURA_WS_URL,
     options: {
         reconnect: true,
     },
 });
 
 const httpLink = new HttpLink({
-    uri: "https://longvb.ddns.net:8083/v1/graphql",
+    uri: process.env.REACT_APP_HASURA_URL,
 });
 
 const link = split(
