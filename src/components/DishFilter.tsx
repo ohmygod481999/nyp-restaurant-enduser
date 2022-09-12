@@ -45,7 +45,7 @@ export default function DishFilter() {
                             >
                                 <img
                                     style={{ width: 99, height: 77 }}
-                                    src={item.thumbnail}
+                                    src={item.thumbnail || "https://www.happyeater.com/images/default-food-image.jpg"}
                                     className="slide-item-img mb-2"
                                 />
                                 <p className="m-0 small">{item.name}</p>
