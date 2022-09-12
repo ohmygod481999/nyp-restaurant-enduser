@@ -161,7 +161,7 @@ export default function Product({ data }: iProduct) {
                     <a>
                         <img
                             style={{ maxHeight: "400px" }}
-                            src={data.thumbnail}
+                            src={data.thumbnail || "https://www.happyeater.com/images/default-food-image.jpg"}
                             className="img-fluid item-img w-100"
                         />
                     </a>
