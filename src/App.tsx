@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import { Landing, Home, Products, Search, Trending } from "./pages";
 import InitOrderTable from "./components/InitOrderTable";
 
@@ -11,7 +11,7 @@ function App() {
     }, []);
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route path="/" element={<InitOrderTable />}>
                     <Route
@@ -33,7 +33,7 @@ function App() {
                 </Route>
                     {/* <Route path="/" element={<Landing />} /> */}
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 export default App;

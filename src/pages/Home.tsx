@@ -39,18 +39,20 @@ export default function Home() {
                     {/* <Trending /> */}
                     <div className="px-3 pb-3 title d-flex align-items-center">
                         <h5 className="m-0 pt-3">Danh sách món ăn</h5>
-                        <Link className="pt-3 font-weight-bold ml-auto" to="">
+                        {/* <Link className="pt-3 font-weight-bold ml-auto" to="">
                             Xem thêm <i className="feather-chevrons-right" />
-                        </Link>
+                        </Link> */}
                     </div>
                     {/* Most popular */}
                     <div className="most_popular px-3">
+                        {data?.product?.length === 0 && <div>Trống, vui lòng thêm món ăn của bạn</div>}
                         <div className="row">
                             {data?.product?.map((item: any, index: number) => (
                                 <Product key={index} data={item} />
                             ))}
                         </div>
                     </div>
+
                     {/* Most sales */}
 
                     {/* Most sales */}
